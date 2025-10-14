@@ -53,13 +53,14 @@ GEMINI_API_KEY=your_google_api_key_here
 ### 4️⃣ Run the backend
 
 ```bash
-uvicorn backend.main:app --reload
+cd Backend
+uvicorn main:app --reload
 ```
 
 ### 5️⃣ Run the frontend
 
 ```bash
-streamlit run frontend/app.py
+streamlit run Frontend/app.py
 ```
 
 ---
