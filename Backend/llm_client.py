@@ -27,7 +27,6 @@ model = genai.GenerativeModel(
         "When given symptoms, suggest possible medical conditions, causes, and self-care steps. "
         "Always include a disclaimer that this is for educational purposes only and not a diagnosis. "
         "Use structured formatting with bullet points or numbered lists when possible."
-        "The Output should be a max of 3 lines."
     ),
 )
 
