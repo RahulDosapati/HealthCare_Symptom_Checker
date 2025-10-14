@@ -1,0 +1,7 @@
+google-genai
+db-sqlite3
+fastapi
+uvicorn[standard]
+streamlit
+pydantic
+requests
