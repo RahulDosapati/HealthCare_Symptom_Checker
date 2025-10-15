@@ -35,8 +35,8 @@ Built using **Python, Streamlit, FastAPI, SQLite**, and **Google Gemini LLM**.
 ### 1️⃣ Clone the repo
 
 ```bash
-git clone https://github.com/<your-github-username>/Healthcare-Symptom-Checker.git
-cd Healthcare-Symptom-Checker
+git clone https://github.com/RahulDosapati/HealthCare_Symptom_Checker.git
+cd HealthCare_Symptom_Checker
 ```
 
 ### 2️⃣ Install dependencies
