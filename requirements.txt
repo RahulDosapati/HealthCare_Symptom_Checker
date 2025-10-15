@@ -6,3 +6,4 @@ requests
 python-dotenv
 # Optional: Google Gemini client (only if you have access)
 google-generativeai
+gunicorn

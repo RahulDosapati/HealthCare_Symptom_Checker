@@ -1,6 +1,6 @@
 # 🩺 Healthcare Symptom Checker
 
-Author: Rahul  
+Author: Rahul
 GitHub: https://github.com/RahulDosapati/HealthCare_Symptom_Checker
 
 An AI-powered web app that analyzes user-reported symptoms and provides **educational insights** on possible conditions and next steps.
@@ -59,7 +59,14 @@ If you do not provide a `GEMINI_API_KEY`, the backend will use a conservative lo
 
 ```bash
 cd Backend
-uvicorn main:app --reload --port 8000
+# Development (auto-reload)
+python -m uvicorn main:app --reload --port 8000
+
+# Production (recommended for Render or other hosts)
+# Install dependencies (if not already done):
+# pip install -r requirements.txt
+# Then run with Gunicorn + Uvicorn workers:
+# gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT --workers 2
 ```
 
 ### 5️⃣ Run the frontend
@@ -71,6 +78,40 @@ streamlit run Frontend/app.py
 Notes:
 - The FastAPI backend listens on port 8000 by default. Adjust `API_URL` and `LOGS_URL` via environment variables in `Frontend/app.py` if needed.
 - This project is for educational/demo purposes only. It is not medical advice and should never replace consultation with a qualified healthcare professional.
+
+---
+
+## ☁️ Deploying to Render
+
+1. Add the repository to Render and enable auto-deploy from `main`.
+2. In the Render service settings, set the build command to:
+
+```
+pip install -r requirements.txt
+```
+
+3. Set the start command to the Gunicorn invocation used above:
+
+```
+cd Backend && gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT --workers 2
+```
+
+4. Add your `GEMINI_API_KEY` as a secret environment variable in Render (do NOT commit it to the repo).
+
+5. Note: SQLite is ephemeral on many hosts. For persistent logs consider provisioning a managed Postgres database and updating `Backend/db.py` to use `DATABASE_URL`.
+
+---
+
+## 🔐 Streamlit frontend — Connect to deployed backend
+
+If you deploy the Streamlit frontend (Streamlit Community Cloud or similar), set these secrets in the Streamlit app settings:
+
+```
+API_URL=https://<your-backend-host>/api/diagnose
+LOGS_URL=https://<your-backend-host>/api/logs
+```
+
+After saving secrets, restart the Streamlit app so it picks up the new environment variables.
 
 ---
 

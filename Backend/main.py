@@ -4,8 +4,16 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
-from llm_client import generate_diagnosis
-from db import init_db, save_query, get_history
+# Support both package-relative imports (when run as a package) and absolute imports
+# (when running scripts or tests from the Backend directory). This avoids
+# ModuleNotFoundError in different execution contexts (uvicorn, tests, Render).
+try:
+    from .llm_client import generate_diagnosis
+    from .db import init_db, save_query, get_history
+except Exception:
+    # Fallback to absolute imports when the package context is not present
+    from llm_client import generate_diagnosis
+    from db import init_db, save_query, get_history
 import os
 
 app = FastAPI(title="Healthcare Symptom Checker API")

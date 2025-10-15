@@ -5,7 +5,9 @@ services:
     branch: main
     plan: free
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "cd Backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+    # Use Gunicorn with Uvicorn workers for production on Render. This is more
+    # robust than the bare uvicorn run used during development.
+    startCommand: "cd Backend && gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT --workers 2"
     envVars:
       - key: DB_PATH
         value: symptom_history.db
