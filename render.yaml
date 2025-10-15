@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: healthcare-symptom-checker-backend
+    env: python
+    branch: main
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "cd Backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: DB_PATH
+        value: symptom_history.db
+        sync: false
+      # GEMINI_API_KEY should be added in Render dashboard as a secret
+      - key: GEMINI_API_KEY
+        value: ""
+        sync: false
