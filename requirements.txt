@@ -1,7 +1,8 @@
-google-genai
-db-sqlite3
 fastapi
 uvicorn[standard]
 streamlit
 pydantic
 requests
+python-dotenv
+# Optional: Google Gemini client (only if you have access)
+google-generativeai

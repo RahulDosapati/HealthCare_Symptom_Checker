@@ -16,7 +16,7 @@ tab1, tab2 = st.tabs(["🩺 Symptom Checker", "📜 Database Logs"])
 # ---------------------------
 with tab1:
     st.title("Healthcare Symptom Checker")
-    st.caption("For **educational purposes only** — not a medical diagnosis.")
+    st.markdown("**Disclaimer:** For educational purposes only — not medical advice or a diagnosis.")
 
     symptoms = st.text_area(
         "Describe your symptoms:",
@@ -30,15 +30,17 @@ with tab1:
         else:
             with st.spinner("Analyzing symptoms..."):
                 try:
-                    res = requests.post(API_URL, json={"text": symptoms, "user_id": user_id})
+                    res = requests.post(API_URL, json={"text": symptoms, "user_id": user_id}, timeout=30)
                     if res.status_code == 200:
                         data = res.json()
                         st.subheader("🧾 Result:")
-                        st.write(data.get("result", "No response."))
-                        st.caption(data.get("disclaimer", ""))
+                        result = data.get("result", "No response.")
+                        # Render simple plaintext with newlines
+                        st.text_area("Analysis", value=result, height=250)
+                        st.markdown(f"**{data.get('disclaimer', '')}**")
                     else:
                         st.error(f"API Error {res.status_code}: {res.text}")
-                except Exception as e:
+                except requests.exceptions.RequestException as e:
                     st.error(f"Error connecting to backend: {e}")
 
 # ---------------------------
@@ -51,7 +53,7 @@ with tab2:
     if st.button("🔄 Refresh Logs"):
         with st.spinner("Fetching logs..."):
             try:
-                res = requests.get(LOGS_URL)
+                res = requests.get(LOGS_URL, timeout=15)
                 if res.status_code == 200:
                     logs = res.json().get("logs", [])
                     if logs:
@@ -60,10 +62,10 @@ with tab2:
                                 st.markdown(f"**ID:** {log['id']}")
                                 st.markdown(f"**Symptom:** {log['symptom']}")
                                 st.markdown(f"**created_at:** {log['created_at']}")
-                                st.markdown(f"**Response:** {log['response']}")
+                                st.text_area("Response", value=log['response'], height=160)
                     else:
                         st.info("No logs available yet.")
                 else:
                     st.error(f"API Error {res.status_code}: {res.text}")
-            except Exception as e:
+            except requests.exceptions.RequestException as e:
                 st.error(f"Error fetching logs: {e}")
