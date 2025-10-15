@@ -3,8 +3,8 @@ import streamlit as st
 import requests
 import os
 
-API_URL = os.getenv("API_URL", "http://localhost:8000/api/diagnose")
-LOGS_URL = os.getenv("LOGS_URL", "http://localhost:8000/api/logs")
+API_URL = os.getenv("API_URL", "https://healthcare-symptom-checker-9wl7.onrender.com/api/diagnose")
+LOGS_URL = os.getenv("LOGS_URL", "https://healthcare-symptom-checker-9wl7.onrender.com/api/logs")
 
 # Page setup
 st.set_page_config(page_title="Symptom Checker", layout="centered")
