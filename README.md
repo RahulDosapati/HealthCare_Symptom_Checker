@@ -1,7 +1,7 @@
 # 🩺 Healthcare Symptom Checker
 
 Author: Rahul  
-GitHub: https://github.com/RahulDosapati/Healthcare-Symptom-Checker
+GitHub: https://github.com/RahulDosapati/Healthcare_Symptom_Checker
 
 An AI-powered web app that analyzes user-reported symptoms and provides **educational insights** on possible conditions and next steps.
 Built using **Python, Streamlit, FastAPI, SQLite**, and **Google Gemini LLM**.
